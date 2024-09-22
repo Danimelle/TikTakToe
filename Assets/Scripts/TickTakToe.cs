@@ -112,14 +112,17 @@ public class TickTakToe : MonoBehaviour
     public void ComputerMoveEasy()
     {
         bool isValidMove = false; //valid move is false in the beginning and changes if the random button has a space in it
+        int numberOfTries = 0;
 
-        while (!isValidMove) //as long as valid move is false while will keep looping 
+        while (!isValidMove && numberOfTries < 5) //as long as valid move is false AND number of tries is less than 5, while will keep looping 
         {
             int row = Random.Range(0, buttonRows.Length); // picks a random number between 0 and the length of buttonrow
             int col = Random.Range(0, buttonRows[row].buttons.Length); //picks a random num between 0 and button lenght
 
             TMP_Text botText = buttonRows[row].buttons[col].GetComponentInChildren<TMP_Text>(); //uses random numbers to get the specific button text
 
+            numberOfTries++;
+            Debug.Log("number of tries: " + numberOfTries);
             if (botText.text == " ")
             {
                 botText.text = "O";
