@@ -18,8 +18,8 @@ public class TickTakToe : MonoBehaviour
 {
 
 
-    [SerializeField] public ButtonRow[] buttonRows; // Array of ButtonRow 
-    private bool isPlayerOne = true;
+    [SerializeField] public ButtonRow[] buttonRows; // Array of ButtonRows 
+    private bool isPlayerOne = true; //player 1 starts
     private bool isPlayerTwo;
 
     [SerializeField] TMP_Text turnText;
@@ -28,7 +28,7 @@ public class TickTakToe : MonoBehaviour
 
     void Start()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 2)
+        if (SceneManager.GetActiveScene().buildIndex == 2) //if the scene index is 2 then it changes to computer vs player
         {
             computerMode = true;
         }
@@ -38,7 +38,7 @@ public class TickTakToe : MonoBehaviour
     {
         GameObject clickedButtonGameObject = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
 
-        if (clickedButtonGameObject != null && !isWinning)
+        if (clickedButtonGameObject != null && !isWinning) //if button exists and no one won yet do this
         {
             Button clickedButton = clickedButtonGameObject.GetComponent<Button>();
 
@@ -48,23 +48,23 @@ public class TickTakToe : MonoBehaviour
                 {
                     if (buttonRows[i].buttons[j] == clickedButton)
                     {
-                        TMP_Text buttonText = buttonRows[i].buttons[j].GetComponentInChildren<TMP_Text>();
+                        TMP_Text buttonText = buttonRows[i].buttons[j].GetComponentInChildren<TMP_Text>(); //gets the text componant of selected button
 
-                        if (buttonText != null && buttonText.text == " ")
+                        if (buttonText != null && buttonText.text == " ") //if text exists and there's a space in the text component then  - 
                         {
-                            if (isPlayerOne == true)
+                            if (isPlayerOne == true) //player 1 starts
                             {
                                 buttonText.text = "X";
                                 WinCheck();
 
-                                if (!isWinning)
+                                if (!isWinning) // if player one didn't win then 
                                 {
-                                    if (computerMode == true)
+                                    if (computerMode == true) //check if comuter mode is on (if it's on the right scene)
                                     {
                                         isPlayerTwo = false;
                                         ComputerMoveEasy();
                                     }
-                                    else
+                                    else //if not then start player 2 turn
                                     {
                                         PlayerTwo();
                                     }
@@ -76,7 +76,7 @@ public class TickTakToe : MonoBehaviour
                                 buttonText.text = "O";
                                 WinCheck();
 
-                                if (!isWinning)
+                                if (!isWinning) // if player 2 didn't win then move on to player 1
                                 {
                                     PlayerOne();
                                 }
@@ -111,14 +111,14 @@ public class TickTakToe : MonoBehaviour
 
     public void ComputerMoveEasy()
     {
-        bool isValidMove = false;
+        bool isValidMove = false; //valid move is false in the beginning and changes if the random button has a space in it
 
-        while (!isValidMove)
+        while (!isValidMove) //as long as valid move is false while will keep looping 
         {
-            int row = Random.Range(0, buttonRows.Length);
-            int col = Random.Range(0, buttonRows[row].buttons.Length);
+            int row = Random.Range(0, buttonRows.Length); // picks a random number between 0 and the length of buttonrow
+            int col = Random.Range(0, buttonRows[row].buttons.Length); //picks a random num between 0 and button lenght
 
-            TMP_Text botText = buttonRows[row].buttons[col].GetComponentInChildren<TMP_Text>();
+            TMP_Text botText = buttonRows[row].buttons[col].GetComponentInChildren<TMP_Text>(); //uses random numbers to get the specific button text
 
             if (botText.text == " ")
             {
@@ -129,7 +129,7 @@ public class TickTakToe : MonoBehaviour
 
 
         WinCheck();
-        if (!isWinning)
+        if (!isWinning) //if computer didn't win, move to player 1
         {
             PlayerOne();
         }
@@ -137,7 +137,7 @@ public class TickTakToe : MonoBehaviour
 
     }
 
-    public void GameOver(int whoWon)
+    public void GameOver(int whoWon) //takes an int calue which tells it which text to switch to
     {
         if (whoWon == 1)
         {
@@ -151,15 +151,12 @@ public class TickTakToe : MonoBehaviour
         {
             turnText.text = "It's a tie";
         }
-        //turnText.text = "game Over";
-
     }
 
     public void Restart(int sceneNumber)
     {
         SceneManager.LoadScene(sceneNumber);
     }
-
     public void WinCheck()
     {
         WinChecker winChecker = new WinChecker(this, buttonRows);

@@ -83,10 +83,9 @@ public class WinChecker
 
                 if (isWinning)
                 {
-                    if (firstButtonInCol.text == "X") { tickTakToe.GameOver(1); }
-                    if (firstButtonInCol.text == "O") { tickTakToe.GameOver(2); }
+                    if (firstButtonInCol.text == "X") { tickTakToe.GameOver(1); } //if the text is x then it sends the game over method a 1 that tells it what to print
+                    if (firstButtonInCol.text == "O") { tickTakToe.GameOver(2); } //if the text is o then it sends the game over method a 2 that tells it what to print
                     Debug.Log("win");
-                    //tickTakToe.GameOver();
                     return true;
                 }
 
@@ -94,7 +93,7 @@ public class WinChecker
         }
 
 
-        // Check diagonal matches (top-left to bottom-right)
+        // diagonal matches
         TMP_Text firstButtonLeft = buttonRows[0].buttons[0].GetComponentInChildren<TMP_Text>();
         if (firstButtonLeft.text == "X" || firstButtonLeft.text == "O")
         {
@@ -122,7 +121,6 @@ public class WinChecker
             }
         }
 
-        // Check diagonal matches (top-right to bottom-left)
         TMP_Text firstButtonRight = buttonRows[0].buttons[2].GetComponentInChildren<TMP_Text>();
         if (firstButtonRight.text == "X" || firstButtonRight.text == "O")
         {
@@ -149,7 +147,7 @@ public class WinChecker
             }
         }
 
-        //check for a tie
+        //check for tie
         bool allFilled = true;
 
         for (int i = 0; i < buttonRows.Length; i++)
